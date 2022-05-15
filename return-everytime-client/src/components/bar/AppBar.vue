@@ -11,9 +11,9 @@
           width="30"
         />
         <div
-          class="text-h5 font-weight-regular cursor-pointer"
+          class="text-h5 font-weight-medium cursor-pointer"
         >
-          Return
+          RETURN
         </div>
       </div>
     </div>
@@ -21,12 +21,13 @@
     <v-spacer></v-spacer>
 
     <v-btn
-      href="https://github.com/vuetifyjs/vuetify/releases/latest"
+      href="https://github.com/seoh02h/return-everytime"
       target="_blank"
+      style="text-transform: none"
       text
     >
-      <span class="mr-2">Latest Release</span>
-      <v-icon>mdi-open-in-new</v-icon>
+      <span class="mr-2 text-h6">Github</span>
+      <v-icon>mdi-github</v-icon>
     </v-btn>
   </v-app-bar>
 </template>
