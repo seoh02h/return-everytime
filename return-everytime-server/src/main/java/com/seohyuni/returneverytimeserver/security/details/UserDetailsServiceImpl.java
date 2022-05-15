@@ -26,7 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
       throw new UsernameNotFoundException("가입되지 않은 이메일입니다.");
     }
     User user = optionalUser.get();
-    return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), this.getAuthority(user.getRole().toString()));
+    return new UserDetailsImpl(user.getId(), user.getEmail(), user.getPassword(), this.getAuthority(user.getRole().toString()));
   }
 
   private Collection<? extends GrantedAuthority> getAuthority(String role){

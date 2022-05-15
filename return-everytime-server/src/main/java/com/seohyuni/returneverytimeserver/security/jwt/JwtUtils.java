@@ -1,5 +1,6 @@
 package com.seohyuni.returneverytimeserver.security.jwt;
 
+import com.seohyuni.returneverytimeserver.security.details.UserDetailsImpl;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
@@ -11,22 +12,23 @@ import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 @Slf4j
+@Component
 public class JwtUtils {
 
   @Value("${return-everytime.app.jwtSecret}")
   private String jwtSecret;
 
   @Value("${return-everytime.app.jwtExpirationMs}")
-  private String jwtExpirationMs;
+  private int jwtExpirationMs;
 
   public String generateJwt(Authentication authentication){
-    User user = (User) authentication.getPrincipal();
+    UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
     return Jwts.builder()
-        .setSubject(user.getUsername())
+        .setSubject(userDetails.getUsername())
         .setIssuedAt(new Date())
         .setExpiration(new Date(new Date().getTime() + jwtExpirationMs))
         .signWith(SignatureAlgorithm.HS256, jwtSecret)

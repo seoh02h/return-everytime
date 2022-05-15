@@ -9,6 +9,10 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Tag;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger.web.DocExpansion;
+import springfox.documentation.swagger.web.ModelRendering;
+import springfox.documentation.swagger.web.UiConfiguration;
+import springfox.documentation.swagger.web.UiConfigurationBuilder;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
@@ -32,7 +36,9 @@ public class SwaggerConfig {
 
     int tagOrd = 0;
     docket.tags(
-        new Tag("Test", "테스트 API", ++tagOrd)
+        new Tag("Test", "테스트 API", ++tagOrd),
+        new Tag("User", "사용자 API", ++tagOrd)
+
     );
 
     return docket;
@@ -43,6 +49,14 @@ public class SwaggerConfig {
         .title(INFO_TITLE)
         .version(INFO_VERSION)
         .description(INFO_DESCRIPTION)
+        .build();
+  }
+
+  @Bean
+  public UiConfiguration uiConfiguration(){
+    return UiConfigurationBuilder.builder()
+        .defaultModelRendering(ModelRendering.MODEL)
+        .docExpansion(DocExpansion.LIST)// 펼쳐보기
         .build();
   }
 
