@@ -1,11 +1,17 @@
 package com.seohyuni.returneverytimeserver.config.swagger;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.builders.RequestParameterBuilder;
+import springfox.documentation.schema.ScalarType;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.ParameterType;
+import springfox.documentation.service.RequestParameter;
 import springfox.documentation.service.Tag;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
@@ -26,13 +32,23 @@ public class SwaggerConfig {
   @Bean
   public Docket restApi() {
 
+    RequestParameterBuilder parameterBuilder = new RequestParameterBuilder();
+    parameterBuilder.name("Authorization")
+        .query(q -> q.model(
+            modelSpecificationBuilder -> modelSpecificationBuilder.scalarModel(ScalarType.STRING)))
+        .in(ParameterType.HEADER);
+
+    List<RequestParameter> parameters = new ArrayList<>();
+    parameters.add(parameterBuilder.build());
+
     Docket docket = new Docket(DocumentationType.SWAGGER_2);
 
     docket.apiInfo(getApiInfo())
         .select()
         .apis(RequestHandlerSelectors.basePackage("com.seohyuni.returneverytimeserver.controller"))
         .paths(PathSelectors.ant("/api/**"))
-        .build();
+        .build()
+        .globalRequestParameters(parameters);
 
     int tagOrd = 0;
     docket.tags(
