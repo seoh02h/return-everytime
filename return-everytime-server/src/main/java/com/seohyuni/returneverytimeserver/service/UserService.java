@@ -3,10 +3,10 @@ package com.seohyuni.returneverytimeserver.service;
 import com.seohyuni.returneverytimeserver.model.user.Role;
 import com.seohyuni.returneverytimeserver.model.user.User;
 import com.seohyuni.returneverytimeserver.repository.UserRepository;
-import com.seohyuni.returneverytimeserver.security.details.UserDetailsImpl;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,6 +32,7 @@ public class UserService {
       throw new IllegalStateException("중복된 이메일이 존재합니다.");
     });
 
+    // TODO checkRole
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     user.setRole(Role.ROLE_USER);
 
@@ -39,14 +40,17 @@ public class UserService {
   }
 
   @Transactional(readOnly = true)
-  public User getLoggedInUser(){
+  public User getLoggedInUser() {
 
-    if(SecurityContextHolder.getContext() == null){
+    SecurityContext securityContext = SecurityContextHolder.getContext();
+    if (securityContext.getAuthentication().getClass().equals(AnonymousAuthenticationToken.class)) {
+      // TODO Exception
       return null;
     }
 
-    UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    User user = repository.findById(userDetails.getId()).get();
+    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+        .getPrincipal();
+    User user = repository.findByEmail(userDetails.getUsername()).get();
     return user;
 
 
