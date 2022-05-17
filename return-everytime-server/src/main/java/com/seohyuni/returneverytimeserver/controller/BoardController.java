@@ -29,7 +29,7 @@ public class BoardController {
   @ApiOperation("게시판 목록 조회")
   @GetMapping("/board")
   public List<BoardResponse.Get> getAll() {
-    return service.getAll().stream().map(r -> modelMapper.map(r, BoardResponse.Get.class)).collect(
+    return service.getAll().stream().map(x -> modelMapper.map(x, BoardResponse.Get.class)).collect(
         Collectors.toList());
   }
 

@@ -9,6 +9,7 @@ import com.seohyuni.returneverytimeserver.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -36,8 +37,9 @@ public class UserController {
 
   @ApiOperation("사용자 전체 조회")
   @GetMapping("/user")
-  public List<User> getAll() {
-    return service.getAll();
+  public List<UserResponse.Get> getAll() {
+    return service.getAll().stream().map(x -> modelMapper.map(x, UserResponse.Get.class)).collect(
+        Collectors.toList());
   }
 
   @ApiOperation("회원가입")

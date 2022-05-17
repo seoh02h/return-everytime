@@ -2,6 +2,8 @@ import user from "../api/user";
 
 const state = {
   userList: [],
+  isAuth: false,
+  currUser: {},
 };
 
 const mutations = {

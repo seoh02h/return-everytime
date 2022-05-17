@@ -6,6 +6,8 @@ import FreeBoard from "@/views/FreeBoard";
 import Study from "@/views/Study";
 import MyPage from "@/views/MyPage";
 import Member from "@/views/Member";
+import Login from "@/views/Login";
+import Register from "@/views/Register";
 
 import Chatting from "@/views/Chatting";
 
@@ -46,6 +48,16 @@ const routes = [
     path: "/chatting",
     name: "Chatting",
     component: Chatting,
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: Register,
   },
 ];
 

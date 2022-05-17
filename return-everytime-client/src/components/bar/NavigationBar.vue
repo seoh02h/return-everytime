@@ -1,6 +1,6 @@
 <template>
   <v-navigation-drawer permanent app clipped>
-    <v-list-item> 로그인 해주세요. </v-list-item>
+    <UserInfo />
     <v-divider></v-divider>
 
     <v-list dense nav>
@@ -26,7 +26,11 @@
 </template>
 
 <script>
+import UserInfo from "@/components/bar/UserInfo";
 export default {
+  components: {
+    UserInfo,
+  },
   data() {
     return {
       menuList: [
