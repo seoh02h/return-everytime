@@ -32,6 +32,7 @@ public class UserService {
       throw new IllegalStateException("중복된 이메일이 존재합니다.");
     });
 
+    // TODO checkRole
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     user.setRole(Role.ROLE_USER);
 
@@ -43,6 +44,7 @@ public class UserService {
 
     SecurityContext securityContext = SecurityContextHolder.getContext();
     if (securityContext.getAuthentication().getClass().equals(AnonymousAuthenticationToken.class)) {
+      // TODO Exception
       return null;
     }
 

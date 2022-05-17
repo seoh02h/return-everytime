@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/api")
-@Api(value = "Test", tags = {"Test"})
+@Api(value = "Log", tags = {"Log"})
 @RequiredArgsConstructor
-public class TestController {
+public class LogController {
 
-  @ApiOperation("커넥션 테스트")
-  @GetMapping("/test")
-  public String test() {
-    return "test";
+  @ApiOperation("시스템 로그 조회")
+  @GetMapping("/log")
+  public String get() {
+    return "log";
   }
 
 }

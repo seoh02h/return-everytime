@@ -14,8 +14,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,24 +35,23 @@ public class UserController {
   private final JwtUtils jwtUtils;
 
   @ApiOperation("사용자 전체 조회")
-  @GetMapping("/users")
+  @GetMapping("/user")
   public List<User> getAll() {
     return service.getAll();
   }
 
   @ApiOperation("회원가입")
-  @PostMapping("/users")
+  @PostMapping("/user")
   public UserResponse.Save registerUser(@RequestBody UserRequest.Save request) {
     User user = modelMapper.map(request, User.class);
     return modelMapper.map(service.save(user), UserResponse.Save.class);
   }
 
   @ApiOperation("로그인")
-  @PostMapping("/users/login")
+  @PostMapping("/user/login")
   public UserResponse.Login login(@RequestBody UserRequest.Login request) {
     Authentication authentication = authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-    SecurityContextHolder.getContext().setAuthentication(authentication);
     String token = jwtUtils.generateJwt(authentication);
     UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
@@ -66,7 +63,7 @@ public class UserController {
   }
 
   @ApiOperation("로그인 사용자 조회")
-  @GetMapping("/users/logged-in")
+  @GetMapping("/user/logged-in")
   public UserResponse.Get getLoggedInUser(){
     return modelMapper.map(service.getLoggedInUser(), UserResponse.Get.class);
   }
