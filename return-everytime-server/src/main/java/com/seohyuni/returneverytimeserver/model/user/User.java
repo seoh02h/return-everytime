@@ -33,4 +33,7 @@ public class User {
   @Column(nullable = false)
   private Role role;
 
+  @Column
+  private String imageUrl;
+
 }

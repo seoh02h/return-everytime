@@ -71,11 +71,16 @@ public class SwaggerConfig {
   }
 
   @Bean
-  public UiConfiguration uiConfiguration(){
+  public UiConfiguration uiConfiguration() {
     return UiConfigurationBuilder.builder()
         .defaultModelRendering(ModelRendering.MODEL)
         .docExpansion(DocExpansion.LIST)// 펼쳐보기
         .build();
+  }
+
+  @Bean
+  public DefaultTypeNameProviderFixer defaultTypeNameProviderFixer() {
+    return new DefaultTypeNameProviderFixer();
   }
 
 }

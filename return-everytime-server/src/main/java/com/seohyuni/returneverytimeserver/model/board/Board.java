@@ -32,6 +32,9 @@ public class Board extends BaseTimeEntity {
   @Column(nullable = false)
   private String name;
 
+  @Column(nullable = false)
+  private Boolean canDel;
+
   @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id", nullable = false)
   private User user;

@@ -19,13 +19,21 @@ import org.springframework.util.StringUtils;
 @Component
 public class JwtUtils {
 
-  @Value("${return-everytime.app.jwtSecret}")
-  private String jwtSecret;
+  private static String jwtSecret;
 
-  @Value("${return-everytime.app.jwtExpirationMs}")
-  private int jwtExpirationMs;
+  private static int jwtExpirationMs;
 
-  public String generateJwt(Authentication authentication){
+  @Value("${app.jwt.secret}")
+  public void setJwtSecret(String value) {
+    jwtSecret = value;
+  }
+
+  @Value("${app.jwt.expiration-ms}")
+  public void setJwtExpirationMs(int value) {
+    jwtExpirationMs = value;
+  }
+
+  public static String generateJwt(Authentication authentication) {
     UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
     return Jwts.builder()
         .setSubject(userDetails.getUsername())
@@ -35,20 +43,20 @@ public class JwtUtils {
         .compact();
   }
 
-  public String getUsernameFromJwt(String token){
+  public static String getUsernameFromJwt(String token) {
     return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
   }
 
-  public String parseJwtFromHeader(HttpServletRequest request){
+  public static String parseJwtFromHeader(HttpServletRequest request) {
     String headerAuth = request.getHeader("Authorization");
 
-    if(StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")){
+    if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {
       return headerAuth.substring(7, headerAuth.length());
     }
     return null;
   }
 
-  public boolean validateJwt(String token) {
+  public static boolean validateJwt(String token) {
     try {
       Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
       return true;

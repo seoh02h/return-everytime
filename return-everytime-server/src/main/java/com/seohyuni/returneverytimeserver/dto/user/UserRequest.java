@@ -1,19 +1,23 @@
 package com.seohyuni.returneverytimeserver.dto.user;
 
 import com.seohyuni.returneverytimeserver.model.user.Role;
+import com.seohyuni.returneverytimeserver.model.user.User;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.modelmapper.ModelMapper;
 
 public class UserRequest {
+
+  private static ModelMapper modelMapper = new ModelMapper();
 
   @Data
   @Builder
   @NoArgsConstructor
   @AllArgsConstructor
-  public static class Save{
+  public static class Save {
 
     @ApiModelProperty(value = "이메일", required = true, position = 0)
     private String email;
@@ -23,6 +27,11 @@ public class UserRequest {
 
     @ApiModelProperty(value = "이름", required = true, position = 2)
     private String name;
+
+    public User toEntity() {
+      User entity = modelMapper.map(this, User.class);
+      return entity;
+    }
 
   }
 
@@ -40,6 +49,11 @@ public class UserRequest {
 
     @ApiModelProperty(value = "권한", required = true, position = 2)
     private Role role;
+
+    public User toEntity() {
+      User entity = modelMapper.map(this, User.class);
+      return entity;
+    }
 
   }
 
