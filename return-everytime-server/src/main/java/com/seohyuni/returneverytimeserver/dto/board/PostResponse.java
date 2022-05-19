@@ -19,20 +19,45 @@ public class PostResponse {
   @AllArgsConstructor
   public static class GetList {
 
-    @ApiModelProperty(value = "게시글 식별번호", position = 0)
+    @ApiModelProperty(value = "게시글 식별번호")
     private Long id;
 
-    @ApiModelProperty(value = "제목", position = 1)
+    @ApiModelProperty(value = "제목")
     private String title;
 
-    @ApiModelProperty(value = "내용", position = 2)
+    @ApiModelProperty(value = "내용")
     private String content;
 
-    @ApiModelProperty(value = "작성자", position = 3)
+    @ApiModelProperty(value = "작성자")
     private UserResponse.Get user;
 
     public static PostResponse.GetList toResponse(Post post) {
       PostResponse.GetList response = modelMapper.map(post, PostResponse.GetList.class);
+      return response;
+    }
+
+  }
+
+  @Data
+  @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
+  public static class Save {
+
+    @ApiModelProperty(value = "게시글 식별번호")
+    private Long id;
+
+    @ApiModelProperty(value = "제목")
+    private String title;
+
+    @ApiModelProperty(value = "내용")
+    private String content;
+
+    @ApiModelProperty(value = "작성자")
+    private UserResponse.Get user;
+
+    public static PostResponse.Save toResponse(Post post) {
+      PostResponse.Save response = modelMapper.map(post, PostResponse.Save.class);
       return response;
     }
 

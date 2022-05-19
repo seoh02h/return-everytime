@@ -2,7 +2,6 @@ package com.seohyuni.returneverytimeserver.dto.board;
 
 import com.seohyuni.returneverytimeserver.dto.user.UserResponse;
 import com.seohyuni.returneverytimeserver.model.board.Board;
-import com.seohyuni.returneverytimeserver.model.user.User;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
@@ -35,7 +34,6 @@ public class BoardResponse {
       return response;
     }
 
-
   }
 
   @Data
@@ -50,9 +48,8 @@ public class BoardResponse {
     @ApiModelProperty(value = "이름", position = 1)
     private String name;
 
-
     @ApiModelProperty(value = "작성자", position = 2)
-    private User user;
+    private UserResponse.Get user;
 
     public static BoardResponse.GetList toResponse(Board entity) {
       BoardResponse.GetList response = modelMapper.map(entity, BoardResponse.GetList.class);

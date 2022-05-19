@@ -19,16 +19,16 @@ public class BoardRequest {
   @AllArgsConstructor
   public static class Save {
 
-    @ApiModelProperty(value = "이름", required = true, position = 0)
+    @ApiModelProperty(value = "이름", required = true)
     private String name;
 
-    @ApiModelProperty(value = "작성자", position = 1)
+    @ApiModelProperty(value = "작성자")
     private Long userId;
 
-    @ApiModelProperty(value = "설명", position = 2)
+    @ApiModelProperty(value = "설명")
     private String description;
 
-    @ApiModelProperty(value = "삭제가능여부", position = 3)
+    @ApiModelProperty(value = "삭제가능여부")
     private boolean canDel;
 
     public Board toEntity(User user) {
