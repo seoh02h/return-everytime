@@ -7,10 +7,10 @@
       <v-row>
         <v-col class="text-sm-center"
           ><router-link to="Login"
-            >로그인</router-link
+            >마이페이지</router-link
           ></v-col
         >
-        <v-col class="text-sm-center">회원가입</v-col>
+        <v-col class="text-sm-center">로그아웃</v-col>
       </v-row>
     </v-container>
     <v-container v-else>

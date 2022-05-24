@@ -22,14 +22,14 @@ public class BoardRequest {
     @ApiModelProperty(value = "이름", required = true)
     private String name;
 
-    @ApiModelProperty(value = "작성자")
+    @ApiModelProperty(value = "생성자", required = true)
     private Long userId;
 
-    @ApiModelProperty(value = "설명")
+    @ApiModelProperty(value = "설명", required = true)
     private String description;
 
-    @ApiModelProperty(value = "삭제가능여부")
-    private boolean canDel;
+    @ApiModelProperty(value = "일반사용자 작성 가능여부", required = true)
+    private boolean writable;
 
     public Board toEntity(User user) {
       Board entity = modelMapper.map(this, Board.class);

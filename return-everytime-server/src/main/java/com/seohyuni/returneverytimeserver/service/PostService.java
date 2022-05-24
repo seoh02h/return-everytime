@@ -22,9 +22,15 @@ public class PostService {
   private final UserRepository userRepository;
 
   @Transactional(readOnly = true)
-  public List<PostResponse.GetList> getAll() {
-    return repository.findAll().stream().map(PostResponse.GetList::toResponse)
-        .collect(Collectors.toList());
+  public List<PostResponse.GetList> getAll(Long boardId, String title) {
+    if(title == null){
+      return repository.findByBoardId(boardId).stream().map(PostResponse.GetList::toResponse).collect(
+          Collectors.toList());
+    }else{
+      return repository.findByBoardIdAndTitleContaining(boardId, title).stream().map(PostResponse.GetList::toResponse).collect(
+          Collectors.toList());
+    }
+
   }
 
   @Transactional

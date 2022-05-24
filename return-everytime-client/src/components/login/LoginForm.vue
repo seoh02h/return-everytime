@@ -4,7 +4,7 @@
       <validation-provider
         v-slot="{ errors }"
         name="이메일"
-        rules="required|email"
+        rules="required"
       >
         <v-text-field
           v-model="email"
@@ -17,7 +17,7 @@
       <validation-provider
         v-slot="{ errors }"
         name="비밀번호"
-        rules="required|max:20|min:8"
+        rules="required"
       >
         <v-text-field
           label="비밀번호"
@@ -26,7 +26,6 @@
             showPassword ? 'mdi-eye' : 'mdi-eye-off'
           "
           :type="showPassword ? 'text' : 'password'"
-          :counter="20"
           :error-messages="errors"
           @click:append="showPassword = !showPassword"
         ></v-text-field>
@@ -119,14 +118,13 @@ extend("confirmed", {
   ...confirmed,
   message: "비밀번호와 비밀번호 확인이 일치하지 않습니다.",
 });
+import { mapActions } from "vuex";
 export default {
   components: {
     ValidationProvider,
     ValidationObserver,
   },
   data: () => ({
-    name: "",
-    phoneNumber: "",
     email: "",
     checkbox: null,
     password: "",
@@ -136,8 +134,15 @@ export default {
   }),
 
   methods: {
+    ...mapActions("user", ["login"]),
     submit() {
       this.$refs.observer.validate();
+      this.login({
+        email: this.email,
+        password: this.password,
+      })
+        .then(() => this.$router.push({ name: "Home" }))
+        .catch((e) => console.log(e.message));
     },
   },
 };

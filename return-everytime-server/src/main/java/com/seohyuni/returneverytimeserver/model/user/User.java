@@ -31,6 +31,9 @@ public class User {
   private String password;
 
   @Column(nullable = false)
+  private String phone;
+
+  @Column(nullable = false)
   private Role role;
 
   @Column

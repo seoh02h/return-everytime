@@ -49,7 +49,7 @@
       <validation-provider
         v-slot="{ errors }"
         name="비밀번호 확인"
-        rules="required|max:20|min:8|confirmed:비밀번호"
+        rules="required|confirmed:비밀번호"
       >
         <v-text-field
           label="비밀번호 확인"
@@ -71,13 +71,11 @@
         name="휴대폰 번호"
         :rules="{
           required: true,
-          digits: 11,
           regex: '^(010|031)\\d{8}$',
         }"
       >
         <v-text-field
-          v-model="phoneNumber"
-          :counter="11"
+          v-model="phone"
           :error-messages="errors"
           label="휴대폰 번호"
           required
@@ -158,6 +156,7 @@ extend("confirmed", {
   ...confirmed,
   message: "비밀번호와 비밀번호 확인이 일치하지 않습니다.",
 });
+import { mapActions } from "vuex";
 export default {
   components: {
     ValidationProvider,
@@ -165,7 +164,7 @@ export default {
   },
   data: () => ({
     name: "",
-    phoneNumber: "",
+    phone: "",
     email: "",
     checkbox: null,
     password: "",
@@ -175,8 +174,17 @@ export default {
   }),
 
   methods: {
+    ...mapActions("user", ["register"]),
     submit() {
       this.$refs.observer.validate();
+      this.register({
+        name: this.name,
+        email: this.email,
+        password: this.password,
+        phone: this.phone,
+      })
+        .then(() => this.$router.push({ name: "Home" }))
+        .catch((e) => console.log(e.message));
     },
   },
 };

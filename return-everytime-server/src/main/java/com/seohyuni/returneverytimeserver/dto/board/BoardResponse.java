@@ -20,13 +20,19 @@ public class BoardResponse {
   @AllArgsConstructor
   public static class Get {
 
-    @ApiModelProperty(value = "게시판 식별번호", position = 0)
+    @ApiModelProperty(value = "게시판 식별번호")
     private Long id;
 
-    @ApiModelProperty(value = "이름", position = 1)
+    @ApiModelProperty(value = "이름")
     private String name;
 
-    @ApiModelProperty(value = "작성자", position = 2)
+    @ApiModelProperty(value = "설명")
+    private String description;
+
+    @ApiModelProperty(value = "일반사용자 작성 가능여부")
+    private boolean writable;
+
+    @ApiModelProperty(value = "작성자" )
     private UserResponse.Get user;
 
     public static BoardResponse.Get toResponse(Board entity) {
@@ -42,13 +48,19 @@ public class BoardResponse {
   @AllArgsConstructor
   public static class GetList {
 
-    @ApiModelProperty(value = "게시판 식별번호", position = 0)
+    @ApiModelProperty(value = "게시판 식별번호")
     private Long id;
 
-    @ApiModelProperty(value = "이름", position = 1)
+    @ApiModelProperty(value = "이름")
     private String name;
 
-    @ApiModelProperty(value = "작성자", position = 2)
+    @ApiModelProperty(value = "설명")
+    private String description;
+
+    @ApiModelProperty(value = "일반사용자 작성 가능여부")
+    private boolean writable;
+
+    @ApiModelProperty(value = "작성자")
     private UserResponse.Get user;
 
     public static BoardResponse.GetList toResponse(Board entity) {
@@ -63,16 +75,25 @@ public class BoardResponse {
   @AllArgsConstructor
   public static class Save {
 
-    @ApiModelProperty(value = "게시판 식별번호", position = 0)
+    @ApiModelProperty(value = "게시판 식별번호")
     private Long id;
 
-    @ApiModelProperty(value = "이름", position = 1)
+    @ApiModelProperty(value = "이름")
     private String name;
 
-    @ApiModelProperty(value = "생성일시", position = 2)
+    @ApiModelProperty(value = "설명")
+    private String description;
+
+    @ApiModelProperty(value = "일반사용자 작성 가능여부")
+    private boolean writable;
+
+    @ApiModelProperty(value = "작성자")
+    private UserResponse.Get user;
+
+    @ApiModelProperty(value = "생성일시")
     private LocalDateTime createdDate;
 
-    @ApiModelProperty(value = "수정일시", position = 3)
+    @ApiModelProperty(value = "수정일시")
     private LocalDateTime modifiedDate;
 
     public static BoardResponse.Save toResponse(Board entity) {
