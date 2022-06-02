@@ -39,12 +39,12 @@ public class Comment {
   @JoinColumn(name = "post_id", nullable = false)
   private Post post;
 
-  @Column
-  private Long commentId;
+  @ManyToOne(targetEntity = Comment.class, fetch = FetchType.LAZY)
+  @JoinColumn(name = "comment_id")
+  private Comment comment;
 
   @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
   private List<Comment> commentList;
-
 
 //  @ManyToOne(targetEntity = Comment.class, fetch = FetchType.LAZY)
 //  @JoinColumn(name = "comment_id", nullable = true)

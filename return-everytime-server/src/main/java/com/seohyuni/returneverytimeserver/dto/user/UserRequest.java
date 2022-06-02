@@ -19,14 +19,17 @@ public class UserRequest {
   @AllArgsConstructor
   public static class Save {
 
-    @ApiModelProperty(value = "이메일", required = true, position = 0)
+    @ApiModelProperty(value = "이메일", required = true)
     private String email;
 
-    @ApiModelProperty(value = "비밀번호", required = true, position = 1)
+    @ApiModelProperty(value = "비밀번호", required = true)
     private String password;
 
-    @ApiModelProperty(value = "이름", required = true, position = 2)
+    @ApiModelProperty(value = "이름", required = true)
     private String name;
+
+    @ApiModelProperty(value = "휴대폰번호", required = true)
+    private String phone;
 
     public User toEntity() {
       User entity = modelMapper.map(this, User.class);

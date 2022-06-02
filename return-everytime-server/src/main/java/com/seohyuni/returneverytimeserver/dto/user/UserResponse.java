@@ -49,19 +49,22 @@ public class UserResponse {
   @AllArgsConstructor
   public static class Save{
 
-    @ApiModelProperty(value = "사용자 식별번호",position = 0)
+    @ApiModelProperty(value = "사용자 식별번호")
     private Long id;
 
-    @ApiModelProperty(value = "이메일", position = 1)
+    @ApiModelProperty(value = "이메일")
     private String email;
 
-    @ApiModelProperty(value = "이름", position = 2)
+    @ApiModelProperty(value = "이름")
     private String name;
 
-    @ApiModelProperty(value = "권한", position = 3)
+    @ApiModelProperty(value = "권한")
     private Role role;
 
-    @ApiModelProperty(value = "프로필이미지", position = 4)
+    @ApiModelProperty(value = "휴대폰번호")
+    private String phone;
+
+    @ApiModelProperty(value = "프로필이미지")
     private String imageUrl;
 
     public static UserResponse.Save toResponse(User entity) {
@@ -76,13 +79,13 @@ public class UserResponse {
   @AllArgsConstructor
   public static class Login{
 
-    @ApiModelProperty(value = "사용자 식별번호",position = 0)
+    @ApiModelProperty(value = "사용자 식별번호")
     private Long id;
 
-    @ApiModelProperty(value = "이메일", position = 1)
+    @ApiModelProperty(value = "이메일")
     private String email;
 
-    @ApiModelProperty(value = "토큰", position = 2)
+    @ApiModelProperty(value = "토큰")
     private String token;
 
   }

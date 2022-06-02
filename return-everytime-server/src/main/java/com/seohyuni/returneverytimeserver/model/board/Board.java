@@ -1,6 +1,5 @@
 package com.seohyuni.returneverytimeserver.model.board;
 
-import com.seohyuni.returneverytimeserver.model.common.BaseTimeEntity;
 import com.seohyuni.returneverytimeserver.model.user.User;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -23,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Board extends BaseTimeEntity {
+public class Board {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,6 +43,5 @@ public class Board extends BaseTimeEntity {
 
   @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
   private List<Post> postList;
-
 
 }

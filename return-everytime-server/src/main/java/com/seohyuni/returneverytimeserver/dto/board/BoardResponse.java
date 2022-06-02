@@ -3,7 +3,6 @@ package com.seohyuni.returneverytimeserver.dto.board;
 import com.seohyuni.returneverytimeserver.dto.user.UserResponse;
 import com.seohyuni.returneverytimeserver.model.board.Board;
 import io.swagger.annotations.ApiModelProperty;
-import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -89,12 +88,6 @@ public class BoardResponse {
 
     @ApiModelProperty(value = "작성자")
     private UserResponse.Get user;
-
-    @ApiModelProperty(value = "생성일시")
-    private LocalDateTime createdDate;
-
-    @ApiModelProperty(value = "수정일시")
-    private LocalDateTime modifiedDate;
 
     public static BoardResponse.Save toResponse(Board entity) {
       BoardResponse.Save response = modelMapper.map(entity, BoardResponse.Save.class);

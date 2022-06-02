@@ -2,12 +2,11 @@ package com.seohyuni.returneverytimeserver.service;
 
 import com.seohyuni.returneverytimeserver.dto.board.CommentRequest;
 import com.seohyuni.returneverytimeserver.dto.board.CommentResponse;
-import com.seohyuni.returneverytimeserver.dto.board.PostResponse;
+import com.seohyuni.returneverytimeserver.dto.board.CommentResponse.GetList;
 import com.seohyuni.returneverytimeserver.model.board.Comment;
 import com.seohyuni.returneverytimeserver.model.board.Post;
 import com.seohyuni.returneverytimeserver.model.user.User;
 import com.seohyuni.returneverytimeserver.repository.CommentRepository;
-import com.seohyuni.returneverytimeserver.dto.board.CommentResponse.GetList;
 import com.seohyuni.returneverytimeserver.repository.PostRepository;
 import com.seohyuni.returneverytimeserver.repository.UserRepository;
 import java.util.List;
@@ -43,7 +42,5 @@ public class CommentService {
     Comment comment = repository.save(request.toEntity(post, user));
 
     return CommentResponse.Save.toResponse(comment);
-
-
   }
 }

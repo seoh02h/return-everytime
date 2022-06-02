@@ -28,6 +28,9 @@ public class PostRequest {
     @ApiModelProperty(value = "작성자", required = true)
     private Long userId;
 
+    @ApiModelProperty(value = "게시판", required = true)
+    private Long boardId;
+
     public Post toEntity(User user) {
       Post entity = modelMapper.map(this, Post.class);
       entity.setUser(user);
