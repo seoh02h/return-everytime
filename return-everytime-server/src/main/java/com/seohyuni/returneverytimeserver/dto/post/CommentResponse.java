@@ -1,9 +1,9 @@
-package com.seohyuni.returneverytimeserver.dto.board;
+package com.seohyuni.returneverytimeserver.dto.post;
 
 import com.seohyuni.returneverytimeserver.dto.user.UserResponse;
-import com.seohyuni.returneverytimeserver.model.board.Comment;
+import com.seohyuni.returneverytimeserver.model.post.Comment;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.List;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,20 +26,24 @@ public class CommentResponse {
     @ApiModelProperty(value = "작성자")
     private UserResponse.Get user;
 
-    @ApiModelProperty(value = "하위댓글")
-    private List<CommentResponse.GetList> commentList;
+    @ApiModelProperty(value = "생성일시")
+    private LocalDateTime createdDate;
 
-    public static CommentResponse.GetList toResponse(Comment entity){
-      CommentResponse.GetList response = modelMapper.map(entity, CommentResponse.GetList.class );
+    @ApiModelProperty(value = "수정일시")
+    private LocalDateTime modifiedDate;
+
+    public static CommentResponse.GetList toResponse(Comment entity) {
+      CommentResponse.GetList response = modelMapper.map(entity, CommentResponse.GetList.class);
       return response;
     }
 
   }
+
   @Data
   @Builder
   @NoArgsConstructor
   @AllArgsConstructor
-  public static class Save {
+  public static class Get {
 
     @ApiModelProperty(value = "내용")
     private String content;
@@ -47,11 +51,14 @@ public class CommentResponse {
     @ApiModelProperty(value = "작성자")
     private UserResponse.Get user;
 
-    @ApiModelProperty(value = "상위댓글")
-    private Long commentId;
+    @ApiModelProperty(value = "생성일시")
+    private LocalDateTime createdDate;
 
-    public static CommentResponse.Save toResponse(Comment entity){
-      CommentResponse.Save response = modelMapper.map(entity, CommentResponse.Save.class );
+    @ApiModelProperty(value = "수정일시")
+    private LocalDateTime modifiedDate;
+
+    public static CommentResponse.Get toResponse(Comment entity) {
+      CommentResponse.Get response = modelMapper.map(entity, CommentResponse.Get.class);
       return response;
     }
 

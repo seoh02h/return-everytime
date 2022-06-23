@@ -37,12 +37,10 @@ public class UserService {
   @Transactional
   public UserResponse.Save save(UserRequest.Save request) {
     repository.findByEmail(request.getEmail()).ifPresent(x -> {
-      throw new IllegalStateException("중복된 이메일이 존재합니다.");
+      throw new RuntimeException("중복된 이메일이 존재합니다.");
     });
 
     User user = request.toEntity();
-
-    // TODO checkRole
 
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     user.setRole(Role.ROLE_USER);
@@ -70,7 +68,7 @@ public class UserService {
   public UserResponse.Save saveImage(Long userId, MultipartFile imageFile) {
 
     User user = repository.getById(userId);
-    String imageUrl = FileUtils.getImageUrl(imageFile);
+    String imageUrl = FileUtils.saveImage(imageFile);
     user.setImageUrl(imageUrl);
 
     return UserResponse.Save.toResponse(user);

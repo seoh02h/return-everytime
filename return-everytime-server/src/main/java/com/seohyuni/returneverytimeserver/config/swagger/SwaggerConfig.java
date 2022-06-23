@@ -54,15 +54,14 @@ public class SwaggerConfig {
     docket.tags(
         new Tag("User", "사용자 API", ++tagOrd),
         new Tag("Log", "시스템로그 API", ++tagOrd),
-        new Tag("Board", "게시판 API", ++tagOrd)
-
-
+        new Tag("Notice", "공지사항 API", ++tagOrd),
+        new Tag("Post", "게시판 API", ++tagOrd)
     );
 
     return docket;
   }
 
-  private ApiInfo getApiInfo(){
+  private ApiInfo getApiInfo() {
     return new ApiInfoBuilder()
         .title(INFO_TITLE)
         .version(INFO_VERSION)

@@ -1,8 +1,9 @@
-package com.seohyuni.returneverytimeserver.dto.board;
+package com.seohyuni.returneverytimeserver.dto.post;
 
 import com.seohyuni.returneverytimeserver.dto.user.UserResponse;
-import com.seohyuni.returneverytimeserver.model.board.Post;
+import com.seohyuni.returneverytimeserver.model.post.Post;
 import io.swagger.annotations.ApiModelProperty;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,8 +32,14 @@ public class PostResponse {
     @ApiModelProperty(value = "작성자")
     private UserResponse.Get user;
 
-    public static PostResponse.GetList toResponse(Post entity) {
-      PostResponse.GetList response = modelMapper.map(entity, PostResponse.GetList.class);
+    @ApiModelProperty(value = "생성일시")
+    private LocalDateTime createdDate;
+
+    @ApiModelProperty(value = "수정일시")
+    private LocalDateTime ModifiedDate;
+
+    public static PostResponse.Get toResponse(Post entity) {
+      PostResponse.Get response = modelMapper.map(entity, PostResponse.Get.class);
       return response;
     }
 
@@ -56,6 +63,12 @@ public class PostResponse {
     @ApiModelProperty(value = "작성자")
     private UserResponse.Get user;
 
+    @ApiModelProperty(value = "생성일시")
+    private LocalDateTime createdDate;
+
+    @ApiModelProperty(value = "수정일시")
+    private LocalDateTime modifiedDate;
+
     public static PostResponse.GetList toResponse(Post post) {
       PostResponse.GetList response = modelMapper.map(post, PostResponse.GetList.class);
       return response;
@@ -63,28 +76,4 @@ public class PostResponse {
 
   }
 
-  @Data
-  @Builder
-  @NoArgsConstructor
-  @AllArgsConstructor
-  public static class Save {
-
-    @ApiModelProperty(value = "게시글 식별번호")
-    private Long id;
-
-    @ApiModelProperty(value = "제목")
-    private String title;
-
-    @ApiModelProperty(value = "내용")
-    private String content;
-
-    @ApiModelProperty(value = "작성자")
-    private UserResponse.Get user;
-
-    public static PostResponse.Save toResponse(Post post) {
-      PostResponse.Save response = modelMapper.map(post, PostResponse.Save.class);
-      return response;
-    }
-
-  }
 }

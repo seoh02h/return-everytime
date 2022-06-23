@@ -1,7 +1,9 @@
 package com.seohyuni.returneverytimeserver.controller;
 
+import com.seohyuni.returneverytimeserver.advice.exception.UnauthorizedException;
 import com.seohyuni.returneverytimeserver.dto.user.UserRequest;
 import com.seohyuni.returneverytimeserver.dto.user.UserResponse;
+import com.seohyuni.returneverytimeserver.model.user.Role;
 import com.seohyuni.returneverytimeserver.security.details.UserDetailsImpl;
 import com.seohyuni.returneverytimeserver.security.jwt.JwtUtils;
 import com.seohyuni.returneverytimeserver.service.UserService;
@@ -53,6 +55,17 @@ public class UserController {
     String token = JwtUtils.generateJwt(authentication);
     UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
+    if (request.getIsAdmin()) {
+      if (!userDetails.getAuthorities().stream()
+          .anyMatch(a -> a.getAuthority().equals(Role.ROLE_ADMIN.toString()))) {
+        throw new UnauthorizedException();
+      }
+    } else {
+      if (!userDetails.getAuthorities().stream()
+          .anyMatch(a -> a.getAuthority().equals(Role.ROLE_USER.toString()))) {
+        throw new UnauthorizedException();
+      }
+    }
     return UserResponse.Login.builder()
         .token(token)
         .id(userDetails.getId())

@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class FileEntity {
 
   @Column(nullable = false)
-  private String fFileName;
+  private String fileName;
 
   @Column(nullable = false)
   private String fileUrl;

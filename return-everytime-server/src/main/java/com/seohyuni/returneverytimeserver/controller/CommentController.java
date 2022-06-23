@@ -1,7 +1,7 @@
 package com.seohyuni.returneverytimeserver.controller;
 
-import com.seohyuni.returneverytimeserver.dto.board.CommentRequest;
-import com.seohyuni.returneverytimeserver.dto.board.CommentResponse;
+import com.seohyuni.returneverytimeserver.dto.post.CommentRequest;
+import com.seohyuni.returneverytimeserver.dto.post.CommentResponse;
 import com.seohyuni.returneverytimeserver.service.CommentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,7 +30,7 @@ public class CommentController {
 
   @ApiOperation("댓글 생성")
   @PostMapping("/comments")
-  public CommentResponse.Save save(@RequestBody CommentRequest.Save request) {
+  public CommentResponse.Get save(@RequestBody CommentRequest.Save request) {
     return service.save(request);
   }
 

@@ -1,6 +1,6 @@
 package com.seohyuni.returneverytimeserver.repository;
 
-import com.seohyuni.returneverytimeserver.model.board.Post;
+import com.seohyuni.returneverytimeserver.model.post.Post;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -8,8 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-  List<Post> findByBoardId(Long boardId);
-
-  List<Post> findByBoardIdAndTitleContaining(Long boardId, String title);
-
+  List<Post> findByTitleContains(String keyword);
 }

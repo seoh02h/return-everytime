@@ -7,10 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 
-@RequiredArgsConstructor
 public class UserResponse {
 
   private static ModelMapper modelMapper = new ModelMapper();
@@ -21,19 +19,19 @@ public class UserResponse {
   @AllArgsConstructor
   public static class Get {
 
-    @ApiModelProperty(value = "사용자 식별번호", position = 0)
+    @ApiModelProperty(value = "사용자 식별번호")
     private Long id;
 
-    @ApiModelProperty(value = "이메일", position = 1)
+    @ApiModelProperty(value = "이메일")
     private String email;
 
-    @ApiModelProperty(value = "이름", position = 2)
+    @ApiModelProperty(value = "이름")
     private String name;
 
-    @ApiModelProperty(value = "권한", position = 3)
+    @ApiModelProperty(value = "권한")
     private Role role;
 
-    @ApiModelProperty(value = "프로필이미지", position = 4)
+    @ApiModelProperty(value = "프로필이미지")
     private String imageUrl;
 
     public static UserResponse.Get toResponse(User entity) {

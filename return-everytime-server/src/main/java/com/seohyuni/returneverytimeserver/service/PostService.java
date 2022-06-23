@@ -1,8 +1,8 @@
 package com.seohyuni.returneverytimeserver.service;
 
-import com.seohyuni.returneverytimeserver.dto.board.PostRequest;
-import com.seohyuni.returneverytimeserver.dto.board.PostResponse;
-import com.seohyuni.returneverytimeserver.model.board.Post;
+import com.seohyuni.returneverytimeserver.dto.post.PostRequest;
+import com.seohyuni.returneverytimeserver.dto.post.PostResponse;
+import com.seohyuni.returneverytimeserver.model.post.Post;
 import com.seohyuni.returneverytimeserver.model.user.User;
 import com.seohyuni.returneverytimeserver.repository.PostRepository;
 import com.seohyuni.returneverytimeserver.repository.UserRepository;
@@ -11,9 +11,11 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class PostService {
 
@@ -22,22 +24,40 @@ public class PostService {
   private final UserRepository userRepository;
 
   @Transactional(readOnly = true)
-  public List<PostResponse.GetList> getAll(Long boardId, String title) {
-    if(title == null){
-      return repository.findByBoardId(boardId).stream().map(PostResponse.GetList::toResponse).collect(
-          Collectors.toList());
-    }else{
-      return repository.findByBoardIdAndTitleContaining(boardId, title).stream().map(PostResponse.GetList::toResponse).collect(
-          Collectors.toList());
-    }
+  public List<PostResponse.GetList> getList(String title) {
+    if (StringUtils.hasText(title)) {
+      return repository.findByTitleContains(title).stream().map(PostResponse.GetList::toResponse)
+          .collect(Collectors.toList());
 
+    }
+    return repository.findAll().stream().map(PostResponse.GetList::toResponse)
+        .collect(Collectors.toList());
   }
 
-  @Transactional
-  public PostResponse.Save save(PostRequest.Save request) {
+  @Transactional(readOnly = true)
+  public PostResponse.Get get(Long postId) {
+    return PostResponse.Get.toResponse(repository.getById(postId));
+  }
+
+  public PostResponse.Get save(PostRequest.Save request) {
     User user = userRepository.getById(request.getUserId());
     Post post = request.toEntity(user);
 
-    return PostResponse.Save.toResponse(repository.save(post));
+    return PostResponse.Get.toResponse(repository.save(post));
   }
+
+  public PostResponse.Get update(Long postId, PostRequest.Update request) {
+    Post post = repository.getById(postId);
+
+    // update
+    post.setTitle(request.getTitle());
+    post.setContent(request.getContent());
+
+    return PostResponse.Get.toResponse(post);
+  }
+
+  public void delete(Long postId) {
+    repository.deleteById(postId);
+  }
+
 }

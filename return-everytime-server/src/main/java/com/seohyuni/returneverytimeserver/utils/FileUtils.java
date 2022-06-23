@@ -21,7 +21,7 @@ public class FileUtils {
   }
 
 
-  public static String getImageUrl(MultipartFile imageFile) throws Exception {
+  public static String saveImage(MultipartFile imageFile) throws Exception {
 
     String extension = FilenameUtils.getExtension(imageFile.getOriginalFilename());
     String fileName = String.valueOf(new Date().getTime()) + "." + extension;
