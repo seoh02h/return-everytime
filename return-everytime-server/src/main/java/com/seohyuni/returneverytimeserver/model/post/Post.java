@@ -3,6 +3,8 @@ package com.seohyuni.returneverytimeserver.model.post;
 import com.seohyuni.returneverytimeserver.model.common.BaseTimeEntity;
 import com.seohyuni.returneverytimeserver.model.user.Role;
 import com.seohyuni.returneverytimeserver.model.user.User;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -40,6 +43,9 @@ public class Post extends BaseTimeEntity {
   @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
+
+  @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+  private List<Comment> commentList;
 
   public Boolean isEditable() {
     SecurityContext securityContext = SecurityContextHolder.getContext();

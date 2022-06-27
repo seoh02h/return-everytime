@@ -1,6 +1,13 @@
 package com.seohyuni.returneverytimeserver.model.post;
 
+import com.seohyuni.returneverytimeserver.model.user.User;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,4 +20,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Bookmark {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+
+  @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id", nullable = false)
+  private User user;
+
+  @ManyToOne(targetEntity = Post.class, fetch = FetchType.LAZY)
+  @JoinColumn(name = "post_id", nullable = false)
+  private Post post;
 }
