@@ -7,11 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.modelmapper.ModelMapper;
 
 public class UserResponse {
 
-  private static ModelMapper modelMapper = new ModelMapper();
 
   @Data
   @Builder
@@ -31,11 +29,22 @@ public class UserResponse {
     @ApiModelProperty(value = "권한")
     private Role role;
 
+    @ApiModelProperty(value = "휴대폰번호")
+    private String phone;
+
     @ApiModelProperty(value = "프로필이미지")
     private String imageUrl;
 
-    public static UserResponse.Get toResponse(User entity) {
-      UserResponse.Get response = modelMapper.map(entity, UserResponse.Get.class);
+    public static UserResponse.Get of(User entity) {
+      UserResponse.Get response = Get.builder()
+          .id(entity.getId())
+          .email(entity.getEmail())
+          .name(entity.getName())
+          .role(entity.getRole())
+          .phone(entity.getPhone())
+          .imageUrl(entity.getImageUrl())
+          .build();
+
       return response;
     }
   }
@@ -45,7 +54,7 @@ public class UserResponse {
   @Builder
   @NoArgsConstructor
   @AllArgsConstructor
-  public static class Save{
+  public static class Save {
 
     @ApiModelProperty(value = "사용자 식별번호")
     private Long id;
@@ -65,8 +74,15 @@ public class UserResponse {
     @ApiModelProperty(value = "프로필이미지")
     private String imageUrl;
 
-    public static UserResponse.Save toResponse(User entity) {
-      UserResponse.Save response = modelMapper.map(entity, UserResponse.Save.class);
+    public static UserResponse.Save of(User entity) {
+      UserResponse.Save response = Save.builder()
+          .id(entity.getId())
+          .email(entity.getEmail())
+          .name(entity.getName())
+          .role(entity.getRole())
+          .phone(entity.getPhone())
+          .imageUrl(entity.getImageUrl())
+          .build();
       return response;
     }
   }
@@ -75,7 +91,7 @@ public class UserResponse {
   @Builder
   @NoArgsConstructor
   @AllArgsConstructor
-  public static class Login{
+  public static class Login {
 
     @ApiModelProperty(value = "사용자 식별번호")
     private Long id;

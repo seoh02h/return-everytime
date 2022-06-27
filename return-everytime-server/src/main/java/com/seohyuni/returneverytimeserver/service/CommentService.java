@@ -10,11 +10,13 @@ import com.seohyuni.returneverytimeserver.repository.CommentRepository;
 import com.seohyuni.returneverytimeserver.repository.PostRepository;
 import com.seohyuni.returneverytimeserver.repository.UserRepository;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class CommentService {
 
@@ -26,10 +28,15 @@ public class CommentService {
 
   @Transactional(readOnly = true)
   public List<GetList> getList(Long postId) {
-    return null;
+    return repository.findByPostId(postId).stream().map(CommentResponse.GetList::of).collect(
+        Collectors.toList());
   }
 
-  @Transactional
+  @Transactional(readOnly = true)
+  public CommentResponse.Get get(Long commentId) {
+    return CommentResponse.Get.of(repository.getById(commentId));
+  }
+
   public CommentResponse.Get save(CommentRequest.Save request) {
 
     User user = userRepository.findById(request.getUserId()).get();
@@ -37,6 +44,20 @@ public class CommentService {
 
     Comment comment = repository.save(request.toEntity(post, user));
 
-    return CommentResponse.Get.toResponse(comment);
+    return CommentResponse.Get.of(comment);
   }
+
+  public CommentResponse.Get update(Long commentId, CommentRequest.Update request) {
+
+    Comment comment = repository.getById(commentId);
+    // Update
+    comment.setContent(request.getContent());
+
+    return CommentResponse.Get.of(comment);
+  }
+
+  public void delete(Long commentId) {
+    repository.deleteById(commentId);
+  }
+
 }

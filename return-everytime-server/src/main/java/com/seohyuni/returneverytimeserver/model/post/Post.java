@@ -1,6 +1,7 @@
 package com.seohyuni.returneverytimeserver.model.post;
 
 import com.seohyuni.returneverytimeserver.model.common.BaseTimeEntity;
+import com.seohyuni.returneverytimeserver.model.user.Role;
 import com.seohyuni.returneverytimeserver.model.user.User;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Data
@@ -35,5 +40,26 @@ public class Post extends BaseTimeEntity {
   @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
+
+  public Boolean isEditable() {
+    SecurityContext securityContext = SecurityContextHolder.getContext();
+    if (securityContext.getAuthentication().getClass().equals(AnonymousAuthenticationToken.class)) {
+      return false;
+    }
+
+    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+        .getPrincipal();
+
+    if (userDetails.getAuthorities().stream()
+        .anyMatch(a -> a.getAuthority().equals(Role.ROLE_ADMIN.toString()))) {
+      return true;
+    }
+
+    if (this.user.getEmail().equals(userDetails.getUsername())) {
+      return true;
+    }
+
+    return false;
+  }
 
 }

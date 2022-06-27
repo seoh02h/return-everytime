@@ -34,7 +34,7 @@ public class PostController {
   @ApiOperation("게시글 조회")
   @GetMapping("/posts/{postId}")
   public PostResponse.Get get(@PathVariable Long postId) {
-    return null;
+    return service.get(postId);
   }
 
   @ApiOperation("게시글 생성")

@@ -43,7 +43,7 @@ public class Comment extends BaseTimeEntity {
   private Post post;
 
 
-  public Boolean hasAuthority() {
+  public Boolean isEditable() {
     SecurityContext securityContext = SecurityContextHolder.getContext();
     if (securityContext.getAuthentication().getClass().equals(AnonymousAuthenticationToken.class)) {
       return false;
@@ -51,13 +51,17 @@ public class Comment extends BaseTimeEntity {
 
     UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
         .getPrincipal();
+
     if (userDetails.getAuthorities().stream()
         .anyMatch(a -> a.getAuthority().equals(Role.ROLE_ADMIN.toString()))) {
       return true;
     }
 
-    //TODO
-    return true;
+    if (this.user.getEmail().equals(userDetails.getUsername())) {
+      return true;
+    }
+
+    return false;
   }
 
 }

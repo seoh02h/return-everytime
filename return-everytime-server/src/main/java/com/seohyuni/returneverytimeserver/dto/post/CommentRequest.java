@@ -8,11 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.modelmapper.ModelMapper;
 
 public class CommentRequest {
-
-  private static ModelMapper modelMapper = new ModelMapper();
 
   @Data
   @Builder
@@ -30,9 +27,12 @@ public class CommentRequest {
     private Long postId;
 
     public Comment toEntity(Post post, User user) {
-      Comment entity = modelMapper.map(this, Comment.class);
-      entity.setUser(user);
-      entity.setPost(post);
+      Comment entity = Comment.builder()
+          .content(content)
+          .post(post)
+          .user(user)
+          .build();
+
       return entity;
     }
 

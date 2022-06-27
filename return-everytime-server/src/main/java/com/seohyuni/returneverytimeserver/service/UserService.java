@@ -29,7 +29,7 @@ public class UserService {
 
   @Transactional(readOnly = true)
   public List<UserResponse.Get> getAll() {
-    return repository.findAll().stream().map(UserResponse.Get::toResponse).collect(
+    return repository.findAll().stream().map(UserResponse.Get::of).collect(
         Collectors.toList());
 
   }
@@ -45,7 +45,7 @@ public class UserService {
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     user.setRole(Role.ROLE_USER);
 
-    return UserResponse.Save.toResponse(repository.save(user));
+    return UserResponse.Save.of(repository.save(user));
   }
 
   @Transactional(readOnly = true)
@@ -60,7 +60,7 @@ public class UserService {
     UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
         .getPrincipal();
 
-    return UserResponse.Get.toResponse(repository.findByEmail(userDetails.getUsername()).get());
+    return UserResponse.Get.of(repository.findByEmail(userDetails.getUsername()).get());
   }
 
   @Transactional
@@ -71,7 +71,7 @@ public class UserService {
     String imageUrl = FileUtils.saveImage(imageFile);
     user.setImageUrl(imageUrl);
 
-    return UserResponse.Save.toResponse(user);
+    return UserResponse.Save.of(user);
   }
 
 

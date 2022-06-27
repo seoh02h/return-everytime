@@ -8,11 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.modelmapper.ModelMapper;
 
 public class PostResponse {
-
-  private static ModelMapper modelMapper = new ModelMapper();
 
   @Data
   @Builder
@@ -36,10 +33,21 @@ public class PostResponse {
     private LocalDateTime createdDate;
 
     @ApiModelProperty(value = "수정일시")
-    private LocalDateTime ModifiedDate;
+    private LocalDateTime modifiedDate;
 
-    public static PostResponse.Get toResponse(Post entity) {
-      PostResponse.Get response = modelMapper.map(entity, PostResponse.Get.class);
+    @ApiModelProperty(value = "수정가능여부")
+    private Boolean editable;
+
+    public static PostResponse.Get of(Post entity) {
+      PostResponse.Get response = Get.builder()
+          .id(entity.getId())
+          .title(entity.getTitle())
+          .content(entity.getContent())
+          .user(UserResponse.Get.of(entity.getUser()))
+          .createdDate(entity.getCreatedDate())
+          .modifiedDate(entity.getModifiedDate())
+          .editable(entity.isEditable())
+          .build();
       return response;
     }
 
@@ -69,8 +77,15 @@ public class PostResponse {
     @ApiModelProperty(value = "수정일시")
     private LocalDateTime modifiedDate;
 
-    public static PostResponse.GetList toResponse(Post post) {
-      PostResponse.GetList response = modelMapper.map(post, PostResponse.GetList.class);
+    public static PostResponse.GetList of(Post entity) {
+      PostResponse.GetList response = GetList.builder()
+          .id(entity.getId())
+          .title(entity.getTitle())
+          .content(entity.getContent())
+          .user(UserResponse.Get.of(entity.getUser()))
+          .createdDate(entity.getCreatedDate())
+          .modifiedDate(entity.getModifiedDate())
+          .build();
       return response;
     }
 

@@ -7,11 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.modelmapper.ModelMapper;
 
 public class PostRequest {
-
-  private static ModelMapper modelMapper = new ModelMapper();
 
   @Data
   @Builder
@@ -29,8 +26,11 @@ public class PostRequest {
     private Long userId;
 
     public Post toEntity(User user) {
-      Post entity = modelMapper.map(this, Post.class);
-      entity.setUser(user);
+      Post entity = Post.builder()
+          .title(title)
+          .content(content)
+          .user(user)
+          .build();
       return entity;
     }
   }
@@ -47,6 +47,14 @@ public class PostRequest {
     @ApiModelProperty(value = "내용", required = true)
     private String content;
 
+    public Post toEntity() {
+      Post entity = Post.builder()
+          .title(title)
+          .content(content)
+          .build();
+      return entity;
+
+    }
   }
 
 }

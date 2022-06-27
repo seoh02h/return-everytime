@@ -6,11 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.modelmapper.ModelMapper;
+
 
 public class UserRequest {
 
-  private static ModelMapper modelMapper = new ModelMapper();
 
   @Data
   @Builder
@@ -31,7 +30,12 @@ public class UserRequest {
     private String phone;
 
     public User toEntity() {
-      User entity = modelMapper.map(this, User.class);
+      User entity = User.builder()
+          .email(email)
+          .password(password)
+          .name(name)
+          .phone(phone)
+          .build();
       return entity;
     }
 
@@ -51,11 +55,6 @@ public class UserRequest {
 
     @ApiModelProperty(value = "권한", required = true)
     private Boolean isAdmin;
-
-    public User toEntity() {
-      User entity = modelMapper.map(this, User.class);
-      return entity;
-    }
 
   }
 

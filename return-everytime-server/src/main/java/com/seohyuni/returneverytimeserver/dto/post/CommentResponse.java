@@ -8,11 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.modelmapper.ModelMapper;
 
 public class CommentResponse {
 
-  private static ModelMapper modelMapper = new ModelMapper();
 
   @Data
   @Builder
@@ -32,8 +30,18 @@ public class CommentResponse {
     @ApiModelProperty(value = "수정일시")
     private LocalDateTime modifiedDate;
 
-    public static CommentResponse.GetList toResponse(Comment entity) {
-      CommentResponse.GetList response = modelMapper.map(entity, CommentResponse.GetList.class);
+    @ApiModelProperty(value = "수정가능여부")
+    private Boolean editable;
+
+    public static CommentResponse.GetList of(Comment entity) {
+      CommentResponse.GetList response = GetList.builder()
+          .content(entity.getContent())
+          .user(UserResponse.Get.of(entity.getUser()))
+          .createdDate(entity.getCreatedDate())
+          .modifiedDate(entity.getModifiedDate())
+          .editable(entity.isEditable())
+          .build();
+
       return response;
     }
 
@@ -57,8 +65,17 @@ public class CommentResponse {
     @ApiModelProperty(value = "수정일시")
     private LocalDateTime modifiedDate;
 
-    public static CommentResponse.Get toResponse(Comment entity) {
-      CommentResponse.Get response = modelMapper.map(entity, CommentResponse.Get.class);
+    @ApiModelProperty(value = "수정가능여부")
+    private Boolean editable;
+
+    public static CommentResponse.Get of(Comment entity) {
+      CommentResponse.Get response = Get.builder()
+          .content(entity.getContent())
+          .user(UserResponse.Get.of(entity.getUser()))
+          .createdDate(entity.getCreatedDate())
+          .modifiedDate(entity.getModifiedDate())
+          .editable(entity.isEditable())
+          .build();
       return response;
     }
 
