@@ -3,6 +3,7 @@ package com.seohyuni.returneverytimeserver.model.post;
 import com.seohyuni.returneverytimeserver.model.common.BaseTimeEntity;
 import com.seohyuni.returneverytimeserver.model.user.Role;
 import com.seohyuni.returneverytimeserver.model.user.User;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -46,6 +47,14 @@ public class Post extends BaseTimeEntity {
 
   @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
   private List<Comment> commentList;
+
+  public List<Comment> getCommentList() {
+    return this.commentList == null ? new ArrayList<>() : this.commentList;
+  }
+
+  public int getNumOfComments() {
+    return this.getCommentList().size();
+  }
 
   public Boolean isEditable() {
     SecurityContext securityContext = SecurityContextHolder.getContext();

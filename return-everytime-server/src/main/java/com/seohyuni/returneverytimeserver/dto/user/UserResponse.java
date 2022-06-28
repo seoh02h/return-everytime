@@ -49,44 +49,6 @@ public class UserResponse {
     }
   }
 
-
-  @Data
-  @Builder
-  @NoArgsConstructor
-  @AllArgsConstructor
-  public static class Save {
-
-    @ApiModelProperty(value = "사용자 식별번호")
-    private Long id;
-
-    @ApiModelProperty(value = "이메일")
-    private String email;
-
-    @ApiModelProperty(value = "이름")
-    private String name;
-
-    @ApiModelProperty(value = "권한")
-    private Role role;
-
-    @ApiModelProperty(value = "휴대폰번호")
-    private String phone;
-
-    @ApiModelProperty(value = "프로필이미지")
-    private String imageUrl;
-
-    public static UserResponse.Save of(User entity) {
-      UserResponse.Save response = Save.builder()
-          .id(entity.getId())
-          .email(entity.getEmail())
-          .name(entity.getName())
-          .role(entity.getRole())
-          .phone(entity.getPhone())
-          .imageUrl(entity.getImageUrl())
-          .build();
-      return response;
-    }
-  }
-
   @Data
   @Builder
   @NoArgsConstructor

@@ -35,7 +35,7 @@ public class UserService {
   }
 
   @Transactional
-  public UserResponse.Save save(UserRequest.Save request) {
+  public UserResponse.Get save(UserRequest.Save request) {
     repository.findByEmail(request.getEmail()).ifPresent(x -> {
       throw new RuntimeException("중복된 이메일이 존재합니다.");
     });
@@ -45,7 +45,7 @@ public class UserService {
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     user.setRole(Role.ROLE_USER);
 
-    return UserResponse.Save.of(repository.save(user));
+    return UserResponse.Get.of(repository.save(user));
   }
 
   @Transactional(readOnly = true)
@@ -65,13 +65,13 @@ public class UserService {
 
   @Transactional
   @SneakyThrows
-  public UserResponse.Save saveImage(Long userId, MultipartFile imageFile) {
+  public UserResponse.Get saveImage(Long userId, MultipartFile imageFile) {
 
     User user = repository.getById(userId);
     String imageUrl = FileUtils.saveImage(imageFile);
     user.setImageUrl(imageUrl);
 
-    return UserResponse.Save.of(user);
+    return UserResponse.Get.of(user);
   }
 
 

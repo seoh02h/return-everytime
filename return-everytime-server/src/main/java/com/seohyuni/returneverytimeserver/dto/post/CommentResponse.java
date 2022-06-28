@@ -33,6 +33,9 @@ public class CommentResponse {
     private Boolean editable;
 
     public static CommentResponse.GetList of(Comment entity) {
+      if (entity == null) {
+        return null;
+      }
       CommentResponse.GetList response = GetList.builder()
           .content(entity.getContent())
           .user(UserResponse.Get.of(entity.getUser()))

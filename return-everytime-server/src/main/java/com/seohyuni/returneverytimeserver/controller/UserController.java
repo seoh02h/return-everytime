@@ -43,7 +43,7 @@ public class UserController {
 
   @ApiOperation("회원가입")
   @PostMapping("/users")
-  public UserResponse.Save registerUser(@RequestBody UserRequest.Save request) {
+  public UserResponse.Get registerUser(@RequestBody UserRequest.Save request) {
     return service.save(request);
   }
 
@@ -82,7 +82,7 @@ public class UserController {
   @ApiOperation("사용자 프로필 이미지 설정")
   @PostMapping("/users/{userId}/images")
   @SneakyThrows
-  public UserResponse.Save saveImage(@PathVariable Long userId,
+  public UserResponse.Get saveImage(@PathVariable Long userId,
       @RequestPart MultipartFile ImageFile) {
     return service.saveImage(userId, ImageFile);
 
