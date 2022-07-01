@@ -4,12 +4,11 @@ const state = {
   userList: [],
   isAuth: false,
   currUser: {},
-  authToken: "",
 };
 
 const getters = {
-  getAuthToken(state) {
-    return state.authToken;
+  getIsAuth(state) {
+    return state.isAuth;
   },
   getCurrUser(state) {
     return state.currUser;
@@ -17,50 +16,61 @@ const getters = {
 };
 
 const mutations = {
-  setIsAuthTrue(state) {
+  SET_ISAUTH(state, isAuth) {
+    state.isAuth = isAuth;
+  },
+  SET_LOGIN(state, user) {
+    localStorage.setItem("token", user.token);
     state.isAuth = true;
+    state.currUser = user;
+  },
+  SET_LOGOUT(state) {
+    state.isAuth = false;
+    state.currUser = {};
+    state.authToken = "";
   },
   setUserList(state, payload) {
     state.userList = payload;
   },
-  setAuthToken(state, payload) {
-    state.authToken = payload;
-  },
-  setCurrUser(state, payload) {
-    state.currUser = payload;
+
+  SET_CURRUSER(state, currUser) {
+    state.currUser = currUser;
   },
 };
 
 const actions = {
-  getUserList(context) {
-    console.log("getUser");
+  FETCH_USER_LIST(context) {
     return user
       .getList()
-      .then((res) => context.commit("setUserList", res));
+      .then((res) =>
+        context.commit("setUserList", res.data)
+      )
+      .catch((error) => console.log(error));
   },
-  register(context, { email, name, password, phone }) {
+  REGISTER(context, { email, name, password, phone }) {
     return user
       .register(email, name, password, phone)
-      .then(() => context.dispatch("getUserList"))
-      .catch((e) => {
-        throw new Error(e.message);
+      .then(() => context.dispatch("FETCH_USER_LIST"))
+      .catch((error) => {
+        throw new Error(error.response.data.message);
       });
   },
-  login(context, { email, password }) {
+  LOGIN(context, { email, password, isAdmin }) {
     return user
-      .login(email, password)
-      .then((data) => {
-        context.commit("setIsAuthTrue");
-        context.commit("setAuthToken", data.token);
+      .login(email, password, isAdmin)
+      .then((res) => {
+        context.commit("SET_LOGIN", res.data);
       })
-      .catch((e) => {
-        throw new Error(e.message);
+      .catch((error) => {
+        throw new Error(error.response.data.message);
       });
   },
-  getLoggedIn(context) {
+  FETCH_LOGGEDIN(context) {
     return user
-      .getLoggedIn(context.getters.getAuthToken)
-      .then((data) => context.commit("setCurrUser", data));
+      .getLoggedIn()
+      .then((res) =>
+        context.commit("SET_CURRUSER", res.data)
+      );
   },
 };
 

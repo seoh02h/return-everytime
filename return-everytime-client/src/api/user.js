@@ -2,40 +2,25 @@ import axios from "axios";
 
 const user = {
   getList() {
-    return axios
-      .get("/users")
-      .then((res) => res.data)
-      .catch(() => {});
+    return axios.get("/users");
   },
   register(email, name, password, phone) {
-    return axios
-      .post("/users", { email, name, password, phone })
-      .then((res) => res.data)
-      .catch((err) => {
-        throw new Error(err.response.data.message);
-      });
+    return axios.post("/users", {
+      email,
+      name,
+      password,
+      phone,
+    });
   },
-  login(email, password) {
-    return axios
-      .post("/users/login", {
-        email,
-        password,
-        role: "ROLE_USER",
-      })
-      .then((res) => res.data)
-      .catch((err) => {
-        throw new Error(err.response.data.message);
-      });
+  login(email, password, isAdmin) {
+    return axios.post("/users/login", {
+      email,
+      password,
+      isAdmin,
+    });
   },
-  getLoggedIn(token) {
-    return axios
-      .get("/users/logged-in", {
-        headers: {
-          Authorization: token,
-        },
-      })
-      .then((res) => res.data)
-      .catch(() => {});
+  getLoggedIn() {
+    return axios.get("/users/logged-in");
   },
 };
 

@@ -1,16 +1,21 @@
 <template>
   <div>
-    <v-container v-if="isAuth">
-      <v-row>
-        <v-col class="text-sm-center">반갑습니다</v-col>
-      </v-row>
+    <v-container v-if="getIsAuth">
       <v-row>
         <v-col class="text-sm-center"
-          ><router-link to="Login"
-            >마이페이지</router-link
-          ></v-col
+          >반갑습니다. {{ getCurrUser.name }}님</v-col
         >
-        <v-col class="text-sm-center">로그아웃</v-col>
+      </v-row>
+      <v-row>
+        <v-col class="text-sm-center">
+          <router-link to="Login">마이페이지</router-link>
+        </v-col>
+        <v-col
+          class="text-sm-center logout-btn"
+          @click="logout"
+        >
+          로그아웃
+        </v-col>
       </v-row>
     </v-container>
     <v-container v-else>
@@ -34,10 +39,16 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 export default {
   computed: {
-    ...mapState("user", ["isAuth"]),
+    ...mapGetters("user", ["getCurrUser", "getIsAuth"]),
+  },
+  methods: {
+    ...mapMutations("user", ["SET_LOGOUT"]),
+    logout() {
+      this.SET_LOGOUT();
+    },
   },
 };
 </script>
@@ -45,5 +56,8 @@ export default {
 <style scoped>
 a {
   text-decoration: none;
+}
+.logout-btn {
+  cursor: pointer;
 }
 </style>

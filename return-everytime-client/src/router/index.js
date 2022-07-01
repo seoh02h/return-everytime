@@ -23,11 +23,13 @@ const routes = [
     path: "/my-page",
     name: "MyPage",
     component: MyPage,
+    meta: { authRequired: true },
   },
   {
     path: "/notice",
     name: "Notice",
     component: Notice,
+    meta: { authRequired: true },
   },
   {
     path: "/study",
@@ -64,6 +66,10 @@ const routes = [
 const router = new VueRouter({
   mode: "history",
   routes,
+});
+
+router.beforeEach(function (to, from, next) {
+  next();
 });
 
 export default router;

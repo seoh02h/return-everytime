@@ -4,12 +4,14 @@ import com.seohyuni.returneverytimeserver.advice.exception.UnauthorizedException
 import com.seohyuni.returneverytimeserver.dto.user.UserRequest;
 import com.seohyuni.returneverytimeserver.dto.user.UserResponse;
 import com.seohyuni.returneverytimeserver.model.user.Role;
+import com.seohyuni.returneverytimeserver.model.user.User;
 import com.seohyuni.returneverytimeserver.security.details.UserDetailsImpl;
 import com.seohyuni.returneverytimeserver.security.jwt.JwtUtils;
 import com.seohyuni.returneverytimeserver.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,13 +34,13 @@ public class UserController {
 
   private final UserService service;
 
-
   private final AuthenticationManager authenticationManager;
 
   @ApiOperation("사용자 전체 조회")
   @GetMapping("/users")
-  public List<UserResponse.Get> getAll() {
-    return service.getAll();
+  public List<UserResponse.Get> getList() {
+    return service.getList().stream().map(UserResponse.Get::of).collect(
+        Collectors.toList());
   }
 
   @ApiOperation("회원가입")
@@ -66,11 +68,10 @@ public class UserController {
         throw new UnauthorizedException();
       }
     }
-    return UserResponse.Login.builder()
-        .token(token)
-        .id(userDetails.getId())
-        .email(userDetails.getUsername())
-        .build();
+
+    User user = service.get(userDetails.getId());
+
+    return UserResponse.Login.of(user, token);
   }
 
   @ApiOperation("로그인 사용자 조회")

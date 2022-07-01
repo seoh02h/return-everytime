@@ -36,9 +36,8 @@
         name="관리자 로그인"
       >
         <v-checkbox
-          v-model="checkbox"
+          v-model="isAdmin"
           :error-messages="errors"
-          value="1"
           label="관리자 로그인"
           type="checkbox"
         ></v-checkbox>
@@ -126,7 +125,7 @@ export default {
   },
   data: () => ({
     email: "",
-    checkbox: null,
+    isAdmin: false,
     password: "",
     showPassword: false,
     passwordConfirm: "",
@@ -134,15 +133,16 @@ export default {
   }),
 
   methods: {
-    ...mapActions("user", ["login"]),
+    ...mapActions("user", ["LOGIN"]),
     submit() {
       this.$refs.observer.validate();
-      this.login({
+      this.LOGIN({
         email: this.email,
         password: this.password,
+        isAdmin: this.isAdmin,
       })
         .then(() => this.$router.push({ name: "Home" }))
-        .catch((e) => console.log(e.message));
+        .catch(() => alert("잘못된 로그인 정보입니다."));
     },
   },
 };

@@ -174,17 +174,17 @@ export default {
   }),
 
   methods: {
-    ...mapActions("user", ["register"]),
+    ...mapActions("user", ["REGISTER"]),
     submit() {
       this.$refs.observer.validate();
-      this.register({
+      this.REGISTER({
         name: this.name,
         email: this.email,
         password: this.password,
         phone: this.phone,
       })
         .then(() => this.$router.push({ name: "Home" }))
-        .catch((e) => console.log(e.message));
+        .catch((e) => alert(e.message));
     },
   },
 };

@@ -28,10 +28,13 @@ public class UserService {
   private final PasswordEncoder passwordEncoder;
 
   @Transactional(readOnly = true)
-  public List<UserResponse.Get> getAll() {
-    return repository.findAll().stream().map(UserResponse.Get::of).collect(
-        Collectors.toList());
+  public List<User> getList() {
+    return repository.findAll();
+  }
 
+  @Transactional(readOnly = true)
+  public User get(Long userId){
+    return repository.getById(userId);
   }
 
   @Transactional

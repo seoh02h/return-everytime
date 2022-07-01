@@ -39,4 +39,8 @@ public class User {
   @Column
   private String imageUrl;
 
+  public Boolean isAdmin(){
+    return this.role.equals(Role.ROLE_ADMIN) ? true : false;
+  }
+
 }

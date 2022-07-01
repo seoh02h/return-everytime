@@ -61,8 +61,34 @@ public class UserResponse {
     @ApiModelProperty(value = "이메일")
     private String email;
 
+    @ApiModelProperty(value = "이름")
+    private String name;
+
+    @ApiModelProperty(value = "권한")
+    private Boolean isAdmin;
+
     @ApiModelProperty(value = "토큰")
     private String token;
+
+    @ApiModelProperty(value = "휴대폰번호")
+    private String phone;
+
+    @ApiModelProperty(value = "프로필이미지")
+    private String imageUrl;
+
+    public static UserResponse.Login of(User entity, String token) {
+      UserResponse.Login response = Login.builder()
+          .id(entity.getId())
+          .email(entity.getEmail())
+          .name(entity.getName())
+          .phone(entity.getPhone())
+          .imageUrl(entity.getImageUrl())
+          .isAdmin(entity.isAdmin())
+          .token(token)
+          .build();
+
+      return response;
+    }
 
   }
 
