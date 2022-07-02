@@ -1,11 +1,20 @@
 <template>
-  <div class="post-container">
+  <v-col>
+    <v-row class="table-header text-center ma-1 py-1">
+      <v-col cols="1">번호</v-col>
+      <v-divider vertical></v-divider>
+      <v-col cols="7">제목</v-col>
+      <v-divider vertical></v-divider>
+      <v-col>작성자</v-col>
+      <v-divider vertical></v-divider>
+      <v-col>작성일시</v-col>
+    </v-row>
     <PostListItem
       v-for="(post, idx) in getPostList"
       :key="getPostList[idx].id"
       :post="post"
     />
-  </div>
+  </v-col>
 </template>
 
 <script>
@@ -28,4 +37,10 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.table-header {
+  border-top: 1px solid rgb(69, 69, 69);
+
+  border-bottom: 1px solid rgb(69, 69, 69);
+}
+</style>

@@ -44,6 +44,16 @@ const actions = {
         throw new Error(error.response.data.message);
       });
   },
+  SAVE_POST_IMAGE(context, { postId, formdata }) {
+    return post
+      .saveImage(postId, formdata)
+      .then((res) => {
+        return res.data;
+      })
+      .catch((error) => {
+        throw new Error(error.response.data.message);
+      });
+  },
 };
 export default {
   namespaced: true,

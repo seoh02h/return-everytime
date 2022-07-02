@@ -4,6 +4,7 @@ import createPersistedState from "vuex-persistedstate";
 import user from "./user";
 import notice from "./notice";
 import post from "./post";
+import comment from "./comment";
 
 Vue.use(Vuex);
 
@@ -12,10 +13,11 @@ const store = new Vuex.Store({
     user,
     notice,
     post,
+    comment,
   },
   plugins: [
     createPersistedState({
-      path: ["user", "notice", "post"],
+      path: ["user", "notice", "post", "comment"],
     }),
   ],
 });

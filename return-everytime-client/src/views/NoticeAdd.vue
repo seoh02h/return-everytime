@@ -25,6 +25,7 @@
     <v-row>
       <v-col>
         <h3 class="ml-1">첨부파일</h3>
+
         <v-file-input
           v-model="files"
           color="primary"

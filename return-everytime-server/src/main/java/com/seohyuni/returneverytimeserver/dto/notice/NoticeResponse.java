@@ -1,10 +1,13 @@
 package com.seohyuni.returneverytimeserver.dto.notice;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.seohyuni.returneverytimeserver.dto.common.ImageResponse;
 import com.seohyuni.returneverytimeserver.dto.user.UserResponse;
 import com.seohyuni.returneverytimeserver.model.notice.Notice;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -41,6 +44,9 @@ public class NoticeResponse {
     @ApiModelProperty(value = "수정가능여부")
     private Boolean editable;
 
+    @ApiModelProperty(value = "이미지")
+    private List<ImageResponse.Get> imageList;
+
     public static NoticeResponse.Get of(Notice entity) {
       NoticeResponse.Get response = Get.builder()
           .id(entity.getId())
@@ -50,6 +56,8 @@ public class NoticeResponse {
           .createdDate(entity.getCreatedDate())
           .modifiedDate(entity.getModifiedDate())
           .editable(entity.isEditable())
+          .imageList(entity.getNoticeImageList().stream().map(ImageResponse.Get::of).collect(
+              Collectors.toList()))
           .build();
       return response;
     }
@@ -81,6 +89,9 @@ public class NoticeResponse {
     @ApiModelProperty(value = "수정일시")
     private LocalDateTime modifiedDate;
 
+    @ApiModelProperty(value = "이미지")
+    private List<ImageResponse.Get> imageList;
+
 
     public static NoticeResponse.GetList of(Notice entity) {
       NoticeResponse.GetList response = GetList.builder()
@@ -90,6 +101,8 @@ public class NoticeResponse {
           .user(UserResponse.Get.of(entity.getUser()))
           .createdDate(entity.getCreatedDate())
           .modifiedDate(entity.getModifiedDate())
+          .imageList(entity.getNoticeImageList().stream().map(ImageResponse.Get::of).collect(
+              Collectors.toList()))
           .build();
       return response;
     }

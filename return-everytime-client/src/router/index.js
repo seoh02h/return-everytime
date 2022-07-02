@@ -1,17 +1,19 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "@/views/Home";
+import NoticeListView from "@/views/NoticeListView";
 import Notice from "@/views/Notice";
-import NoticeDetail from "@/views/NoticeDetail";
 import NoticeAdd from "@/views/NoticeAdd";
 import PostAdd from "@/views/PostAdd";
-import Post from "@/views/Post";
-import PostDetail from "@/views/PostDetail";
+import PostListView from "@/views/PostListView";
+import PostView from "@/views/PostView";
 import MyPage from "@/views/MyPage";
 import Member from "@/views/Member";
 import Login from "@/views/Login";
 import Register from "@/views/Register";
 import Chatting from "@/views/Chatting";
+import ChattingList from "@/views/ChattingList";
+
 import store from "@/store/index.js";
 
 Vue.use(VueRouter);
@@ -23,15 +25,15 @@ const routes = [
     component: Home,
   },
   {
-    path: "/my-page",
+    path: "/mypage",
     name: "MyPage",
     component: MyPage,
     meta: { authRequired: true },
   },
   {
     path: "/notices",
-    name: "Notice",
-    component: Notice,
+    name: "NoticeListView",
+    component: NoticeListView,
     meta: { authRequired: true },
   },
   {
@@ -42,14 +44,14 @@ const routes = [
   },
   {
     path: "/notices/:noticeId",
-    name: "NoticeDetail",
-    component: NoticeDetail,
+    name: "Notice",
+    component: Notice,
     meta: { authRequired: true },
   },
   {
     path: "/posts",
-    name: "Post",
-    component: Post,
+    name: "PostListView",
+    component: PostListView,
     meta: { authRequired: true },
   },
   {
@@ -60,8 +62,8 @@ const routes = [
   },
   {
     path: "/posts/:postId",
-    name: "PostDetail",
-    component: PostDetail,
+    name: "PostView",
+    component: PostView,
     meta: { authRequired: true },
   },
   {
@@ -72,6 +74,12 @@ const routes = [
   },
   {
     path: "/chatting",
+    name: "ChattingList",
+    component: ChattingList,
+    meta: { authRequired: true },
+  },
+  {
+    path: "/chatting/:chattingId",
     name: "Chatting",
     component: Chatting,
     meta: { authRequired: true },

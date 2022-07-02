@@ -84,8 +84,8 @@ public class UserController {
   @PostMapping("/users/{userId}/images")
   @SneakyThrows
   public UserResponse.Get saveImage(@PathVariable Long userId,
-      @RequestPart MultipartFile ImageFile) {
-    return service.saveImage(userId, ImageFile);
+      @RequestPart MultipartFile image) {
+    return service.saveImage(userId, image);
 
   }
 

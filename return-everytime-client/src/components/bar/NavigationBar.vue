@@ -1,8 +1,7 @@
 <template>
   <v-navigation-drawer permanent app clipped>
-    <UserInfo />
+    <UserBar />
     <v-divider></v-divider>
-
     <v-list dense nav>
       <v-list-item> Menu </v-list-item>
       <v-list-item
@@ -26,10 +25,10 @@
 </template>
 
 <script>
-import UserInfo from "@/components/bar/UserInfo";
+import UserBar from "@/components/bar/UserBar.vue";
 export default {
   components: {
-    UserInfo,
+    UserBar,
   },
   data() {
     return {

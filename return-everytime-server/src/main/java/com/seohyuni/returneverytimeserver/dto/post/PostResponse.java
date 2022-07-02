@@ -1,7 +1,10 @@
 package com.seohyuni.returneverytimeserver.dto.post;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.seohyuni.returneverytimeserver.dto.common.ImageResponse;
+import com.seohyuni.returneverytimeserver.dto.post.CommentResponse.GetList;
 import com.seohyuni.returneverytimeserver.dto.user.UserResponse;
+import com.seohyuni.returneverytimeserver.dto.user.UserResponse.Get;
 import com.seohyuni.returneverytimeserver.model.post.Post;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDateTime;
@@ -48,6 +51,9 @@ public class PostResponse {
     @ApiModelProperty(value = "댓글")
     private List<CommentResponse.GetList> commentList;
 
+    @ApiModelProperty(value = "이미지")
+    private List<ImageResponse.Get> imageList;
+
     public static PostResponse.Get of(Post entity) {
       PostResponse.Get response = Get.builder()
           .id(entity.getId())
@@ -59,6 +65,8 @@ public class PostResponse {
           .editable(entity.isEditable())
           .numOfComments(entity.getNumOfComments())
           .commentList(entity.getCommentList().stream().map(CommentResponse.GetList::of).collect(
+              Collectors.toList()))
+          .imageList(entity.getPostImageList().stream().map(ImageResponse.Get::of).collect(
               Collectors.toList()))
           .build();
 

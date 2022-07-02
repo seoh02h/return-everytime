@@ -26,6 +26,13 @@ const post = {
       userId,
     });
   },
+  saveImage(postId, formdata) {
+    return axios.post(`/posts/${postId}/images`, formdata, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  },
 };
 
 export default post;

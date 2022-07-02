@@ -1,5 +1,6 @@
 package com.seohyuni.returneverytimeserver.utils;
 
+import com.seohyuni.returneverytimeserver.model.common.Image;
 import java.io.File;
 import java.util.Date;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Component
 @RequiredArgsConstructor
-public class FileUtils {
+public class ImageUtils {
 
   private static String imagePath;
 
@@ -21,16 +22,31 @@ public class FileUtils {
   }
 
 
-  public static String saveImage(MultipartFile imageFile) throws Exception {
+  public static String getImageUrl(MultipartFile image) throws Exception {
 
-    String extension = FilenameUtils.getExtension(imageFile.getOriginalFilename());
+    String extension = FilenameUtils.getExtension(image.getOriginalFilename());
     String fileName = String.valueOf(new Date().getTime()) + "." + extension;
     String classpath = ResourceUtils.getURL("classpath:static/").getPath();
     String filePath = classpath + fileName;
     File saveFile = new File(filePath);
-    imageFile.transferTo(saveFile);
+    image.transferTo(saveFile);
 
     return imagePath + fileName;
+  }
+
+  public static Image getImage(MultipartFile image) throws Exception{
+    String extension = FilenameUtils.getExtension(image.getOriginalFilename());
+    String fileName = String.valueOf(new Date().getTime()) + "." + extension;
+    String classpath = ResourceUtils.getURL("classpath:static/").getPath();
+    String filePath = classpath + fileName;
+    File saveFile = new File(filePath);
+    image.transferTo(saveFile);
+
+    return Image.builder()
+        .url(imagePath + fileName)
+        .oriName(image.getOriginalFilename())
+        .build();
+
   }
 
 

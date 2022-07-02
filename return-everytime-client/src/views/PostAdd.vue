@@ -1,63 +1,78 @@
 <template>
   <v-container>
     <v-row>
-      <v-col><h1>게시글 등록</h1></v-col>
+      <v-col class="ma-3">
+        <h2 class="mb-3 text-center">게시글 등록</h2>
+        <v-divider></v-divider>
+      </v-col>
     </v-row>
-    <v-row>
+    <v-row class="mx-16">
       <v-col>
-        <h3 class="ml-1">제목</h3>
-        <v-text-field
-          v-model="title"
-          label="제목을 입력하세요"
-          solo
-        ></v-text-field>
+        <v-row>
+          <v-col>
+            <div class="text-h6">제목</div>
+            <v-text-field
+              filled
+              v-model="title"
+              placeholder="제목을 입력하세요"
+            ></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <div class="text-h6">내용</div>
+            <v-textarea
+              v-model="content"
+              filled
+              name="input-7-4"
+              placeholder="내용을 입력하세요"
+              height="250"
+            ></v-textarea>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <div class="text-h6 mb-1">첨부파일</div>
+            <v-file-input
+              v-model="images"
+              color="primary"
+              multiple
+              placeholder="파일을 선택하세요"
+              outlined
+              accept="image/png, image/jpeg, image/bmp"
+            >
+            </v-file-input>
+          </v-col>
+        </v-row>
+        <v-row class="mx-16">
+          <v-col>
+            <v-carousel
+              hide-delimiters
+              v-if="images.length > 0"
+            >
+              <v-carousel-item
+                v-for="(image, idx) in images"
+                :key="idx"
+                :src="url(image)"
+              ></v-carousel-item>
+            </v-carousel>
+          </v-col>
+        </v-row>
+        <v-row class="mt-9 mb-6">
+          <v-spacer></v-spacer>
+          <v-btn
+            @click="save"
+            width="200"
+            height="50"
+            color="primary"
+            :disabled="
+              title.length === 0 || content.length === 0
+            "
+          >
+            등록
+          </v-btn>
+        </v-row>
       </v-col>
-    </v-row>
-    <v-row>
-      <v-col>
-        <h3 class="ml-1">내용</h3>
-        <v-textarea
-          v-model="content"
-          solo
-          name="input-7-4"
-          label="내용을 입력하세요"
-        ></v-textarea>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col>
-        <h3 class="ml-1">첨부파일</h3>
-        <v-file-input
-          v-model="files"
-          color="primary"
-          counter
-          label="파일을 선택하세요"
-          multiple
-          placeholder="Select your files"
-          prepend-icon="mdi-paperclip"
-          outlined
-          :show-size="1000"
-        >
-          <template v-slot:selection="{ index, text }">
-            <v-chip color="primary" dark label small>
-              {{ text }}
-            </v-chip>
-          </template>
-        </v-file-input>
-      </v-col>
-    </v-row>
-    <v-row class="image-container">
-      <v-col
-        class="image-item"
-        v-for="(file, idx) in files"
-        :key="idx"
-      >
-        <v-img :src="url(file)" max-width="200" />
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-btn>취소</v-btn>
-      <v-btn @click="save">등록</v-btn>
     </v-row>
   </v-container>
 </template>
@@ -67,7 +82,7 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
-      files: [],
+      images: [],
       content: "",
       title: "",
     };
@@ -76,11 +91,10 @@ export default {
     ...mapGetters("user", ["getCurrUser"]),
   },
   methods: {
-    ...mapActions("post", ["SAVE_POST"]),
-    url(file) {
-      console.log(file);
-      if (!file) return;
-      return URL.createObjectURL(file);
+    ...mapActions("post", ["SAVE_POST", "SAVE_POST_IMAGE"]),
+    url(image) {
+      if (!image) return;
+      return URL.createObjectURL(image);
     },
     save() {
       this.SAVE_POST({
@@ -88,7 +102,20 @@ export default {
         title: this.title,
         userId: this.getCurrUser.id,
       }).then((post) => {
-        this.$router.push(`/posts/${post.id}`);
+        if (this.images.length > 0) {
+          var formdata = new FormData();
+          for (let i = 0; i < this.images.length; i++) {
+            formdata.append("imageList", this.images[i]);
+          }
+          this.SAVE_POST_IMAGE({
+            postId: post.id,
+            formdata: formdata,
+          }).then((post) => {
+            this.$router.push(`/posts/${post.id}`);
+          });
+        } else {
+          this.$router.push(`/posts/${post.id}`);
+        }
       });
     },
   },

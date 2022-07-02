@@ -48,6 +48,13 @@ public class Post extends BaseTimeEntity {
   @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
   private List<Comment> commentList;
 
+  @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+  private List<PostImage> postImageList;
+
+  public List<PostImage> getPostImageList() {
+    return this.postImageList == null ? new ArrayList<>() : this.postImageList;
+  }
+
   public List<Comment> getCommentList() {
     return this.commentList == null ? new ArrayList<>() : this.commentList;
   }

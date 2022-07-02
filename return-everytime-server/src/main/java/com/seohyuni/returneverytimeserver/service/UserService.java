@@ -5,9 +5,8 @@ import com.seohyuni.returneverytimeserver.dto.user.UserResponse;
 import com.seohyuni.returneverytimeserver.model.user.Role;
 import com.seohyuni.returneverytimeserver.model.user.User;
 import com.seohyuni.returneverytimeserver.repository.UserRepository;
-import com.seohyuni.returneverytimeserver.utils.FileUtils;
+import com.seohyuni.returneverytimeserver.utils.ImageUtils;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -69,10 +68,10 @@ public class UserService {
 
   @Transactional
   @SneakyThrows
-  public UserResponse.Get saveImage(Long userId, MultipartFile imageFile) {
+  public UserResponse.Get saveImage(Long userId, MultipartFile image) {
 
     User user = repository.getById(userId);
-    String imageUrl = FileUtils.saveImage(imageFile);
+    String imageUrl = ImageUtils.getImageUrl(image);
     user.setImageUrl(imageUrl);
 
     return UserResponse.Get.of(user);
