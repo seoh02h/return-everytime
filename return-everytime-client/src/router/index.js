@@ -4,8 +4,9 @@ import Home from "@/views/Home";
 import Notice from "@/views/Notice";
 import NoticeDetail from "@/views/NoticeDetail";
 import NoticeAdd from "@/views/NoticeAdd";
-
-import FreeBoard from "@/views/FreeBoard";
+import PostAdd from "@/views/PostAdd";
+import Post from "@/views/Post";
+import PostDetail from "@/views/PostDetail";
 import MyPage from "@/views/MyPage";
 import Member from "@/views/Member";
 import Login from "@/views/Login";
@@ -46,9 +47,21 @@ const routes = [
     meta: { authRequired: true },
   },
   {
-    path: "/free-board",
-    name: "FreeBoard",
-    component: FreeBoard,
+    path: "/posts",
+    name: "Post",
+    component: Post,
+    meta: { authRequired: true },
+  },
+  {
+    path: "/posts-add",
+    name: "PostAdd",
+    component: PostAdd,
+    meta: { authRequired: true },
+  },
+  {
+    path: "/posts/:postId",
+    name: "PostDetail",
+    component: PostDetail,
     meta: { authRequired: true },
   },
   {

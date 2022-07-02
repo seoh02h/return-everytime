@@ -47,6 +47,7 @@ public class UserService {
 
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     user.setRole(Role.ROLE_USER);
+    user.setImageUrl("http://localhost:8080/uploads/user.png");
 
     return UserResponse.Get.of(repository.save(user));
   }

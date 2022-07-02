@@ -24,7 +24,6 @@ export default {
   },
   created() {
     this.FETCH_NOTICE_LIST();
-    console.log(this.getNoticeList);
   },
 };
 </script>

@@ -42,7 +42,7 @@ export default {
         {
           title: "자유게시판",
           icon: "mdi-view-dashboard",
-          to: "/free-board",
+          to: "/posts",
         },
         {
           title: "멤버",

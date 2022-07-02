@@ -1,5 +1,6 @@
 package com.seohyuni.returneverytimeserver.dto.post;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.seohyuni.returneverytimeserver.dto.user.UserResponse;
 import com.seohyuni.returneverytimeserver.model.post.Comment;
 import io.swagger.annotations.ApiModelProperty;
@@ -23,6 +24,7 @@ public class CommentResponse {
     @ApiModelProperty(value = "작성자")
     private UserResponse.Get user;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     @ApiModelProperty(value = "생성일시")
     private LocalDateTime createdDate;
 

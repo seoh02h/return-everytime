@@ -1,7 +1,13 @@
 <template>
   <div>
     <h1 class="mt-3 ml-5">공지사항</h1>
-    <v-btn elevation="2" href="/notices-add"> 등록 </v-btn>
+    <v-btn
+      v-if="getCurrUser.isAdmin"
+      elevation="2"
+      href="/notices-add"
+    >
+      등록
+    </v-btn>
     <NoticeList />
   </div>
 </template>
