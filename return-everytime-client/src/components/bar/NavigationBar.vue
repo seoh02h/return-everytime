@@ -37,17 +37,12 @@ export default {
         {
           title: "공지사항",
           icon: "mdi-home",
-          to: "/notice",
+          to: "/notices",
         },
         {
           title: "자유게시판",
           icon: "mdi-view-dashboard",
           to: "/free-board",
-        },
-        {
-          title: "스터디",
-          icon: "mdi-book-open-variant",
-          to: "/study",
         },
         {
           title: "멤버",

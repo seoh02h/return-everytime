@@ -123,15 +123,16 @@ export default {
     ValidationProvider,
     ValidationObserver,
   },
-  data: () => ({
-    email: "",
-    isAdmin: false,
-    password: "",
-    showPassword: false,
-    passwordConfirm: "",
-    showPasswordConfirm: false,
-  }),
-
+  data() {
+    return {
+      email: "",
+      isAdmin: false,
+      password: "",
+      showPassword: false,
+      passwordConfirm: "",
+      showPasswordConfirm: false,
+    };
+  },
   methods: {
     ...mapActions("user", ["LOGIN"]),
     submit() {

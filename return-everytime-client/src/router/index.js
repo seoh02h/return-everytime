@@ -2,6 +2,9 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "@/views/Home";
 import Notice from "@/views/Notice";
+import NoticeDetail from "@/views/NoticeDetail";
+import NoticeAdd from "@/views/NoticeAdd";
+
 import FreeBoard from "@/views/FreeBoard";
 import MyPage from "@/views/MyPage";
 import Member from "@/views/Member";
@@ -25,12 +28,23 @@ const routes = [
     meta: { authRequired: true },
   },
   {
-    path: "/notice",
+    path: "/notices",
     name: "Notice",
     component: Notice,
     meta: { authRequired: true },
   },
-
+  {
+    path: "/notices-add",
+    name: "NoticeAdd",
+    component: NoticeAdd,
+    meta: { authRequired: true },
+  },
+  {
+    path: "/notices/:noticeId",
+    name: "NoticeDetail",
+    component: NoticeDetail,
+    meta: { authRequired: true },
+  },
   {
     path: "/free-board",
     name: "FreeBoard",

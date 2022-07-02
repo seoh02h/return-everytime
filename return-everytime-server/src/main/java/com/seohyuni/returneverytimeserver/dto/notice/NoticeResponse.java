@@ -1,5 +1,6 @@
 package com.seohyuni.returneverytimeserver.dto.notice;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.seohyuni.returneverytimeserver.dto.user.UserResponse;
 import com.seohyuni.returneverytimeserver.model.notice.Notice;
 import io.swagger.annotations.ApiModelProperty;
@@ -8,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class NoticeResponse {
 
@@ -29,6 +31,7 @@ public class NoticeResponse {
     @ApiModelProperty(value = "작성자")
     private UserResponse.Get user;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     @ApiModelProperty(value = "생성일시")
     private LocalDateTime createdDate;
 
@@ -71,6 +74,7 @@ public class NoticeResponse {
     @ApiModelProperty(value = "작성자")
     private UserResponse.Get user;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     @ApiModelProperty(value = "생성일시")
     private LocalDateTime createdDate;
 

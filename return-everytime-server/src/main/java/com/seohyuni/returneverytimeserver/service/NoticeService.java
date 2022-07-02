@@ -9,6 +9,8 @@ import com.seohyuni.returneverytimeserver.repository.UserRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,9 +24,8 @@ public class NoticeService {
   private final UserRepository userRepository;
 
   @Transactional(readOnly = true)
-  public List<NoticeResponse.GetList> getList() {
-    return repository.findAll().stream().map(NoticeResponse.GetList::of)
-        .collect(Collectors.toList());
+  public List<Notice> getList() {
+    return repository.findAll(Sort.by(Direction.DESC, "createdDate"));
   }
 
   @Transactional(readOnly = true)

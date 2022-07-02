@@ -162,16 +162,18 @@ export default {
     ValidationProvider,
     ValidationObserver,
   },
-  data: () => ({
-    name: "",
-    phone: "",
-    email: "",
-    checkbox: null,
-    password: "",
-    showPassword: false,
-    passwordConfirm: "",
-    showPasswordConfirm: false,
-  }),
+  data() {
+    return {
+      name: "",
+      phone: "",
+      email: "",
+      checkbox: null,
+      password: "",
+      showPassword: false,
+      passwordConfirm: "",
+      showPasswordConfirm: false,
+    };
+  },
 
   methods: {
     ...mapActions("user", ["REGISTER"]),

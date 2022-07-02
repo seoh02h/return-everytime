@@ -7,6 +7,7 @@ import com.seohyuni.returneverytimeserver.service.NoticeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +29,8 @@ public class NoticeController {
   @ApiOperation("공지사항 목록 조회")
   @GetMapping("/notices")
   public List<NoticeResponse.GetList> getList() {
-    return service.getList();
+    return service.getList().stream().map(NoticeResponse.GetList::of)
+        .collect(Collectors.toList());
   }
 
   @ApiOperation("공지사항 조회")

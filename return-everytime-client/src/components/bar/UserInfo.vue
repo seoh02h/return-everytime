@@ -47,6 +47,7 @@ export default {
   methods: {
     ...mapMutations("user", ["SET_LOGOUT"]),
     logout() {
+      this.$router.push({ name: "Home" });
       this.SET_LOGOUT();
     },
   },
